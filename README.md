@@ -1,3 +1,5 @@
+> This fork contains the fix for https://github.com/FdezRomero/request-image-size/pull/22. Some JPG images require more than one chunk to be properly analyzed so it shouldn't throw an error for a first chunk analysis.
+
 # request-image-size
 
 [![NPM](https://nodei.co/npm/request-image-size.png)](https://nodei.co/npm/request-image-size/)
