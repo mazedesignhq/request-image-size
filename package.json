@@ -1,5 +1,5 @@
 {
-  "name": "request-image-size",
+  "name": "@mazeapp/request-image-size",
   "version": "2.2.0",
   "description": "Detect image dimensions via request.",
   "author": "Rodrigo Fernández Romero",
