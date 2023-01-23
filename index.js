@@ -52,12 +52,12 @@ module.exports = function requestImageSize(options) {
         } catch (err) {
           if (!err.message.includes('exceeded buffer limits')) {
             imageSizeError = err;
-            return req.abort();
+            return req.end();
           }
         }
 
         if (size) {
-          return req.abort();
+          return req.end();
         }
       });
 
