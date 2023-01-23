@@ -9,18 +9,18 @@
  * https://github.com/jo/http-image-size
  */
 
-const request = require('request');
-const imageSize = require('image-size');
-const HttpError = require('standard-http-error');
+const request = require("request");
+const imageSize = require("image-size");
+const HttpError = require("standard-http-error");
 
 module.exports = function requestImageSize(options) {
   let opts = {
-    encoding: null
+    encoding: null,
   };
 
-  if (options && typeof options === 'object') {
+  if (options && typeof options === "object") {
     opts = Object.assign(options, opts);
-  } else if (options && typeof options === 'string') {
+  } else if (options && typeof options === "string") {
     opts = Object.assign({ uri: options }, opts);
   } else {
     return Promise.reject(
@@ -35,7 +35,7 @@ module.exports = function requestImageSize(options) {
   return new Promise((resolve, reject) => {
     const req = request(opts);
 
-    req.on('response', res => {
+    req.on("response", (res) => {
       if (res.statusCode >= 400) {
         return reject(new HttpError(res.statusCode, res.statusMessage));
       }
@@ -44,26 +44,26 @@ module.exports = function requestImageSize(options) {
       let size;
       let imageSizeError;
 
-      res.on('data', chunk => {
+      res.on("data", (chunk) => {
         buffer = Buffer.concat([buffer, chunk]);
 
         try {
           size = imageSize(buffer);
         } catch (err) {
-          if (!err.message.includes('exceeded buffer limits')) {
+          if (!err.message.includes("exceeded buffer limits")) {
             imageSizeError = err;
-            return req.abort();
+            return req.end();
           }
         }
 
         if (size) {
-          return req.abort();
+          return req.end();
         }
       });
 
-      res.on('error', err => reject(err));
+      res.on("error", (err) => reject(err));
 
-      res.on('end', () => {
+      res.on("end", () => {
         if (!size) {
           return reject(imageSizeError);
         }
@@ -73,6 +73,6 @@ module.exports = function requestImageSize(options) {
       });
     });
 
-    req.on('error', err => reject(err));
+    req.on("error", (err) => reject(err));
   });
 };
