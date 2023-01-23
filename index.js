@@ -25,7 +25,7 @@ module.exports = function requestImageSize(options) {
   } else {
     return Promise.reject(
       new Error(
-        'You should provide an URI string or a 'request' options object.'
+        'You should provide an URI string or a "request" options object.'
       )
     );
   }
@@ -35,7 +35,7 @@ module.exports = function requestImageSize(options) {
   return new Promise((resolve, reject) => {
     const req = request(opts);
 
-    req.on('response', (res) => {
+    req.on('response', res => {
       if (res.statusCode >= 400) {
         return reject(new HttpError(res.statusCode, res.statusMessage));
       }
@@ -44,7 +44,7 @@ module.exports = function requestImageSize(options) {
       let size;
       let imageSizeError;
 
-      res.on('data', (chunk) => {
+      res.on('data', chunk => {
         buffer = Buffer.concat([buffer, chunk]);
 
         try {
