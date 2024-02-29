@@ -29,7 +29,7 @@ jobs:
         id: coana-cli
         uses: coana-tech/coana-action/vulnerability-analysis@stable
         with:
-          apiKey: ${{ secrets.COANA_API_KEY }}
+          apiKey: ${{ secrets.COANA_API_KEY_PUBLIC_REPOS }}
           repoUrl: https://github.com/${{github.repository}}
           debug: 'true'
           uploadReportArtifact: 'true'
